@@ -37,48 +37,25 @@
     height: auto;
     overflow: hidden;
     margin: auto;
+    border-radius: 10px;
 }
-.title{
-    width: 100%;
-    margin-top: 5%;
-    display: flex;
-    margin: auto;
-    justify-content: space-around;
-    background-color: aquamarine;
+.weather{
+    margin-top: 10%;
+}
+.name h3{
+    font-size: 24px;
     font-weight: bold;
-    font-size: 24px;
 }
-.card1{
-    margin-top:5% ;
-
+.temperature{
+    margin: 10%;
 }
-.card2{
-    margin-top:10% ;
-    display: flex;
-    height: 150px;
-    border-bottom: solid #807C7C 1px;
-
-}
-.card-information h3{
-    font-size: 24px;
-}
-.information{
-    display: flex;
-     justify-content: space-around;
-}
-.temparature{
-    margin-top: 30%;
-    display: flex;
+.temperature1{
     font-size: 96px;
 }
 sup{
-  font-size: 32px;  
-  margin-top: 15px;
+    font-size: 50px ;
 }
-.card2-1{
-    line-height: 2;
-    margin-right:90px ;
-}.card2-2{
-    line-height: 2;
+.temperature2{
+    color: #676060;
+    font-size: 24px;
 }
-
