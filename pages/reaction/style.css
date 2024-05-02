@@ -44,7 +44,7 @@
     cursor: pointer;
     transition: color 0.2s ease;
     margin-left: 10px;
-    margin-top: -5px;
+    margin-top: 50px;
     /* margin-bottom: 10px; */
   }
   .stars i.active {

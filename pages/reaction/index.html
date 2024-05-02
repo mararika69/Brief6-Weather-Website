@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Document</title>
+    <title>Weather Website</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 </head>
 <body>
@@ -24,19 +24,54 @@
         <!-- <input id="" form-control-lg" type="text" placeholder="1-5" aria-label=".form-control-lg example" style="height: 50px; background-color: #F6F6F6; border-radius: 10px; border: #DEDADA solid 1px; padding-left: 23px; font-size: 16px;"> -->
 
         <input type="number" id="ratingInput" placeholder="1-5" style="height: 55px; background-color: rgba(177, 168, 168, 0.171); border: rgba(224, 210, 210, 0.575) solid 1px; border-radius: 12px; font-size: 17px; width: 100%; font-size: 17px; padding-left: 20px;">
-        <p style="font-size: 16px; margin-top: 2%;">Comment</p>
-        <input class="form-control form-control-lg" type="text" placeholder="Comment" aria-label=".form-control-lg example" style="height: 150px; background-color: #F6F6F6; border-radius: 12px; border: #DEDADA solid 1px; padding-left: 25px; padding-bottom: 110px; font-size: 16px;">
-        
-        <button type="button" class="btn btn-secondary" style="background-color: #4C7DFB; border: #DEDADA solid 1px; color: white; float: right; border-radius: 12px; font-size: 16px;"><b>Submit</b></button>
+        <!-- <p style="font-size: 16px; margin-top: 2%;">Comment</p>
+        <input class="form-control form-control-lg" type="text" placeholder="Comment" aria-label=".form-control-lg example" style="height: 150px; background-color: #F6F6F6; border-radius: 12px; border: #DEDADA solid 1px; padding-left: 25px; padding-bottom: 110px; font-size: 16px;"> -->
+        <form id="commentForm">
+            <textarea name="comment" required placeholder="Comment" oninput="updatePreview()" style="width: 100%; height: 150px; margin-top: 3%; background-color: rgba(177, 168, 168, 0.171); border: rgba(224, 210, 210, 0.575) solid 1px; border-radius: 12px; font-size: 17px; width: 100%; font-size: 16px; padding-left: 20px; padding-top: 1%;"></textarea>
+        </form>
+        <button type="submit" style="width: 170px;height: 50px; background-color: #4C7DFB; border: #DEDADA solid 1px; color: white; float: right; border-radius: 12px; font-size: 16px; margin-top: 1%;"><b>Submit</b></button>
+        <!-- <button type="button" class="btn btn-secondary" style="background-color: #4C7DFB; border: #DEDADA solid 1px; color: white; float: right; border-radius: 12px; font-size: 16px;"><b>Submit</b></button> -->
         
         <div class="share-reaction" style="margin-top: 12%;"><b>People Reaction About Today's Weather</b></div>
         <br>
         <div class="boxreaction">
             <br>
             <b style="font-size: 16px; margin-left: 4.5%;">sopheak.men@pse.ngo</b>
+            <div id="previewBox" style="margin-left: 4.5%;">
+                <div id="commentPreview" style="white-space: pre-wrap;"></div> <!-- Use pre-wrap to maintain whitespace -->
+            </div>
+            <script>
+                function updatePreview() {
+                    const commentInput = document.querySelector('textarea[name="comment"]');
+                    const preview = document.getElementById('commentPreview');
+                    preview.textContent = commentInput.value; // Update the preview as you type
+                }
+                
+                document.getElementById('commentForm').addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const formData = new FormData(this);
+                    const comment = formData.get('comment');
+                    if (comment.trim() === "") {
+                        alert("Please enter a comment.");
+                        return;
+                    }
+                    fetch('/comments', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ comment: comment })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Optionally clear preview and reset form
+                        document.getElementById('commentPreview').textContent = '';
+                        this.reset();
+                    })
+                    .catch(error => console.error('Error:', error));
+                });
+                </script>
             
-            <p style="font-size: 16px; font-style: inherit; margin-left: 4.5%; margin-top: 1%">Today, the weather is very hot. I need to drink a lot of water to handle this situation. I will tell my classmate to drink much water <br>
-                as well. How about your feeling everyone?</p>
                 <div class="stars" style="margin-left: 3.5%;">
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
