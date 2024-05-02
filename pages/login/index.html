@@ -13,24 +13,28 @@
     <title>Document</title>
   </head>
   <body>
+    <!-- action="../reaction/index.html?id=" -->
     <h2>Weather  Website Login</h2>
-    <form class="container">
+    <form class="container"  method="posy" name="form" onsubmit="return validated()">
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label" style="font-size: 16px; margin-left: 5px; ">Email address</label>
-        <input style="font-size: 18px; background-color: #F6F6F6; width: 100%;"
+        <input style="font-size: 18px; background-color: #F6F6F6; width: 100%;" 
           type="email"
           class="form-control"
-          id="exampleInputEmail1"
+          id="email"
           placeholder="Email Address"
           aria-describedby="emailHelp"
+          name="email"
+          autocomplete="on"
         />
-        <div id="btn">
-          <button type="submit" class="btn btn-primary" style="margin-top: 15px; width: 100%; ">Login</button>
-        </div>
+        <div id="email_error">Please fill up your Email</div>
+        <button id="Loginemail" type="submit" class="btn btn-primary" style="margin-top: 15px; width: 100%; ">Login</button>
+       
+       
        
       </div>
     </form>
-   
+    
    
     <script src="index.js"></script>
     <script
