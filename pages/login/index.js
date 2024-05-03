@@ -98,54 +98,55 @@
 // }
 // saveEmailLogin('example@example.com');
 // Function to validate the form before submission
-function validateForm() {
+// function validateForm() {
+//     var emailInput = document.getElementById("email");
+//     var email = emailInput.value.trim(); 
+    
+//     if (email === "") {
+//         document.getElementById("email_error").style.display = "block";
+//         return false; 
+//     }
+    
+//     localStorage.setItem("email", email);
+//     return true;
+// }
+
+// Function to validate the email and save it in local storage
+function validateAndSaveEmail() {
     var emailInput = document.getElementById("email");
     var email = emailInput.value.trim(); 
-    
-    if (email === "") {
+    if (!email) {
+        document.getElementById("email_error").innerText = "Please fill up your Email";
         document.getElementById("email_error").style.display = "block";
         return false; 
     }
     
-    localStorage.setItem("email", email);
-    return true;
-}
-
-function checkEmail() {
-    var emailInput = document.getElementById("email");
-    var email = emailInput.value.trim(); 
-    
     let check = email.includes('@');
-    if (check) {
-        console.log("Email is correct");
-    } else {
-        console.log("Email is incorrect");
+    if (!check) {
+        document.getElementById("email_error").innerText = "Please enter a valid Email";
+        document.getElementById("email_error").style.display = "block";
+        return false; 
     }
-    
     localStorage.setItem("email", email);
-    window.location = "../pages/reaction/index.html"
+    return true; 
 }
 
-document.getElementById("Loginemail").addEventListener("click", checkEmail);
+
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault(); 
+    if (validateAndSaveEmail()) {
+      
+        window.location.href = "../home/index.html";
+    }
+});
 
 function getEmailLogin() {
- 
     var email = localStorage.getItem('email');
     return email;
 }
-
-function getEmailLogin() {
-  
-    var email = localStorage.getItem('email');
-    return email;
-}
-
 var emailLogin = getEmailLogin();
 if (emailLogin) {
-    console.log('Email login  from local storage:', emailLogin);
+    console.log('Email login from local storage:', emailLogin);
 } else {
     console.log('No email login found in local storage');
 }
-
-
-
