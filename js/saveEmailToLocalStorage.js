@@ -4,40 +4,42 @@
 
 // 3. console.log(saveEmailToLocalStorage("lyna")); pass
 
-function saveEmailLogin() {
+function getEmailLogin() {
+    var email = localStorage.getItem('email');
+    return email;
+}
+
+var emailLogin = getEmailLogin();
+if (emailLogin) {
+    console.log('Email login from local storage:', emailLogin);
+} else {
+    console.log('No email login found in local storage');
+}
+
+function validateAndSaveEmail() {
     var emailInput = document.getElementById("email");
     var email = emailInput.value.trim(); 
-    
-    if (email === "") {
+    if (!email) {
+        document.getElementById("email_error").innerText = "Please fill up your Email";
         document.getElementById("email_error").style.display = "block";
         return false; 
     }
     
-    localStorage.setItem("email", email);
-    
-    return true;
-}
-
-// Call the saveEmailLogin function when the form is submitted
-function validateForm() {
-    return saveEmailLogin();
-}
-
-// Function to check email format and save it to local storage
-function checkEmail() {
-    var emailInput = document.getElementById("email");
-    var email = emailInput.value.trim(); 
-    
     let check = email.includes('@');
-    if (check) {
-        console.log("Email is correct");
-    } else {
-        console.log("Email is incorrect");
+    if (!check) {
+        document.getElementById("email_error").innerText = "Please enter a valid Email";
+        document.getElementById("email_error").style.display = "block";
+        return false; 
     }
-    
     localStorage.setItem("email", email);
-    window.location = "../pages/reaction/index.html";
+    return true; 
 }
 
-// Add event listener to the login button
-document.getElementById("Loginemail").addEventListener("click", checkEmail);
+
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault(); 
+    if (validateAndSaveEmail()) {
+      
+        window.location.href = "../home/index.html";
+    }
+});
