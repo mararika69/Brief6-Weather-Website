@@ -144,6 +144,7 @@ function getEmailLogin() {
     var email = localStorage.getItem('email');
     return email;
 }
+
 var emailLogin = getEmailLogin();
 if (emailLogin) {
     console.log('Email login from local storage:', emailLogin);
