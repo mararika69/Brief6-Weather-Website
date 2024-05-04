@@ -13,13 +13,27 @@ h2{
 .container #email_error
 {
     margin-top:5px ;
-    width: 220px;
+    width:480px;
     font-size: 18px;
     color: #C62828;
     background: rgba(255,0,0,0.1 );
     text-align: center;
     padding: 5px 8px;
-    border-radius: 3px;
+    border-radius: 5px;
     border: 1px solid #EF9A9A;
     display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        width: 80%; 
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .container #email_error {
+        font-size: 16px;
+    }
 }
