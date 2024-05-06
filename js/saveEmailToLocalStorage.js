@@ -36,8 +36,8 @@ function checkEmail() {
     }
     
     localStorage.setItem("email", email);
-    window.location = "../pages/reaction/index.html";
+    window.location.href = "../home/index.html";
 }
 
 // Add event listener to the login button
-document.getElementById("Loginemail").addEventListener("click", checkEmail);
+document.getElementById("loginFrom").addEventListener("click", checkEmail);

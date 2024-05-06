@@ -7,7 +7,7 @@
 }
 .container{
     width: 80%;
-    /* height: 900px; */
+    height: 9000px;
     overflow: hidden;
     justify-content: center;
     margin: auto;
@@ -98,3 +98,15 @@
     text-align: center;
     margin: 5%;
 }
+
+
+
+.button{
+    text-align: center;
+    margin-top: 5%;
+
+}
+.weather{
+    margin-left: 50px;
+}
+
