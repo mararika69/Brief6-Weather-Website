@@ -1,25 +1,40 @@
-// function checkEmail(email){
-//     let check = 0;
-//     for (let i=0 ; i<=email.length; i++){
-//         if(email[i]===('@')){
-//             check = 1;
-//         }
-//     }
-//     if (check===1){
-//         console.log("correct");
-//     }else{
-//         console.log("incorrect")
-//     }
-// }
-// console.log (checkEmail('luis@pseorg'));
-// // console.log(checkEmail('nakimhay.lyinstitute.pse.ngo'));
-
-// var savedEmail = localStorage.getItem('email');
-
-// if (savedEmail) {
-//     console.log('Email exists in local storage:', savedEmail);
-// } else {
+function validateAndSaveEmail() {
+    var emailInput = document.getElementById("email");
+    var email = emailInput.value.trim(); 
+    if (!email) {
+        document.getElementById("email_error").innerText = "Please fill up your Email";
+        document.getElementById("email_error").style.display = "block";
+        return false; 
+    }
     
-//     console.log('No email found in local storage');
-// }
+    let check = email.includes('@');
+    if (!check) {
+        document.getElementById("email_error").innerText = "Please enter a valid Email";
+        document.getElementById("email_error").style.display = "block";
+        return false; 
+    }
+    localStorage.setItem("email", email);
+    return true; 
+}
+
+
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault(); 
+    if (validateAndSaveEmail()) {
+      
+        window.location.href = "../home/index.html";
+    }
+});
+
+function getEmailLogin() {
+    var email = localStorage.getItem('email');
+    return email;
+}
+
+var emailLogin = getEmailLogin();
+if (emailLogin) {
+    console.log('Email login from local storage:', emailLogin);
+} else {
+    console.log('No email login found in local storage');
+}
 

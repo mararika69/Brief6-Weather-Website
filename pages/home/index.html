@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container">
-        <div class="log-out"><button class="btn btn-primary" type="submit">Logout</button>
+    <div class="log-out"><button class="btn btn-primary" type="submit" onclick="logout()">Logout</button>
         </div>
         <div class="paragraph">
             <h1 style="font-size: 24px;">Phnom Penh Weather Website</h1>
@@ -41,7 +41,7 @@
                             <p id="uv"></p>
                         </div>
                     </div>
-            <div class="location">
+                <div class="location">
                         <div class="location-name">
                             <p>Country</p>
                             <p>Zone</p>
@@ -53,16 +53,27 @@
                     </div>
                 </div>
             </div>
-
+          
+          
         </div>
-        
+        <div class="button">
+            <button type="button" onclick="shareReaction()" class="btn btn-primary" id="button">Share Reaction</button>
+      </div>
+
         <div class="future">
             <p>3 Days Forecast Weathers</p>
         </div>
 
+        <div class="card-weather" id="forecast">
+            <!-- Forecast data will be dynamically inserted here -->
+        </div>
 
+        <div class="box">
+
+        </div>
         
     </div>
+    
 
     <script src="index.js"></script>
 </body>
