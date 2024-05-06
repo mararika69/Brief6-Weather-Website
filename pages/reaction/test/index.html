@@ -1,81 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Comment Live Preview</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-    }
-    textarea {
-        width: 100%; /* Full width of the form */
-        box-sizing: border-box; /* Include padding and border in the element's width */
-        height: 100px;
-    }
-    button {
-        padding: 10px 20px;
-        font-size: 16px;
-        margin-top: 10px;
-    }
-    #previewBox {
-        margin-top: 20px;
-        padding: 10px;
-        background-color: #f9f9f9;
-        border: 1px solid #ccc;
-        min-height: 100px;
-        width: 100%;
-        box-sizing: border-box;
-    }
-    h1, h2 {
-        color: #333;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch API Example</title>
 </head>
 <body>
-<h1>Comment Box with Live Preview</h1>
-<form id="commentForm">
-    <textarea name="comment" required placeholder="Comment" oninput="updatePreview()"></textarea>
-    <button type="submit">Submit</button>
-</form>
-<div id="previewBox">
-    <h2>Preview:</h2>
-    <div id="commentPreview" style="white-space: pre-wrap;"></div> <!-- Use pre-wrap to maintain whitespace -->
-</div>
+    <h1>Data from API</h1>
+    <button id="fetchButton">Fetch Data</button>
+    <div id="dataDisplay"></div>
 
-<script>
-function updatePreview() {
-    const commentInput = document.querySelector('textarea[name="comment"]');
-    const preview = document.getElementById('commentPreview');
-    preview.textContent = commentInput.value; // Update the preview as you type
-}
-
-document.getElementById('commentForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const formData = new FormData(this);
-    const comment = formData.get('comment');
-    if (comment.trim() === "") {
-        alert("Please enter a comment.");
-        return;
-    }
-    fetch('/comments', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ comment: comment })
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Optionally clear preview and reset form
-        document.getElementById('commentPreview').textContent = '';
-        this.reset();
-    })
-    .catch(error => console.error('Error:', error));
-});
-
-</script>
-<script type="module" src="index.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
