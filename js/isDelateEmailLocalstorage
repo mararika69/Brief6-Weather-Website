@@ -1,0 +1,11 @@
+function deleteEmailLogin() {
+    const key = 'emailLogin';
+    
+    if (localStorage.getItem(key) !== null) {
+        localStorage.removeItem(key);
+        console.log('Email login removed from local storage.');
+    } else {
+        console.log('No email login found in local storage to remove.');
+    }
+}
+deleteEmailLogin();

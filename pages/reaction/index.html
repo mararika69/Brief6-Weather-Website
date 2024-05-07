@@ -13,9 +13,11 @@
     <div class="container">
 
         <div class="all">
-            <a href="../home/index.html"type="button" class="btn btn-secondary" style="background-color: #EAE6E2; border: #DEDADA solid 1px; color: black; border-radius: 10px; font-size: 16px;"><b>Back</b></a>
+            <div> <a href="../home/index.html"type="button" class="btn btn-secondary" style="background-color: #EAE6E2; border: #DEDADA solid 1px; color: black; border-radius: 10px; font-size: 16px;"><b>Back</b> </a>
+            </div>
         
         <button type="button" class="btn btn-secondary" style="background-color: #F86262; border: #DEDADA solid 1px; color: white; float: right; border-radius: 10px; font-size: 16px;" onclick="logout()"><b>Log Out</b></button>
+
 
         <div class="title"><b>Phnom Penh Weather  Website - People Reaction</b></div>
         <br>
@@ -37,41 +39,10 @@
         <br>
         <div class="boxreaction">
             <br>
-            <b style="font-size: 16px; margin-left: 4.5%;">sopheak.men@pse.ngo</b>
+            <b style="font-size: 16px; margin-left: 4.5%;">name of email</b>
             <div id="previewBox" style="margin-left: 4.5%;">
                 <div id="commentPreview" style="white-space: pre-wrap;"></div> <!-- Use pre-wrap to maintain whitespace -->
             </div>
-            <script>
-                function updatePreview() {
-                    const commentInput = document.querySelector('textarea[name="comment"]');
-                    const preview = document.getElementById('commentPreview');
-                    preview.textContent = commentInput.value; // Update the preview as you type
-                }
-                
-                document.getElementById('commentForm').addEventListener('submit', function(event) {
-                    event.preventDefault();
-                    const formData = new FormData(this);
-                    const comment = formData.get('comment');
-                    if (comment.trim() === "") {
-                        alert("Please enter a comment.");
-                        return;
-                    }
-                    fetch('/comments', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ comment: comment })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Optionally clear preview and reset form
-                        document.getElementById('commentPreview').textContent = '';
-                        this.reset();
-                    })
-                    .catch(error => console.error('Error:', error));
-                });
-                </script>
             
                 <div class="stars" style="margin-left: 3.5%;">
                     <i class="fa-solid fa-star"></i>
