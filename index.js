@@ -23,7 +23,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
     event.preventDefault(); 
     if (validateAndSaveEmail()) {
       
-        window.location.href = "pages/home/index.html";
+        window.location.href = "./pages/home/index.html";
     }
 });
 
