@@ -51,7 +51,7 @@ fetchWeatherData()
 
 function logout() {
     localStorage.removeItem("email");
-    window.location.href = "../login/index.html"; 
+    window.location = "../login/index.html";
 }
 
 
@@ -71,40 +71,11 @@ function shareReaction(){
     window.location = "../reaction/index.html";
 }
 
-    async function fetchForecastData() {
-        const apiUrl = 'https://weatherapi-com.p.rapidapi.com/forecast.json?q=Phnom%20Penh&days=1';
-        const apiKey = 'cb8be4545bmsh9e51effc4f9751bp1fe5cejsn8201a91db9ca'; 
-        const forecastData = []; // Array to store forecast data for each day
-    
-        try {
-            // Loop to make API calls for each day
-            for (let i = 2; i < 3; i++) {
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: {
-                        'X-RapidAPI-Key': apiKey,
-                        'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
-                    }
-                });
-    
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-    
-                const dayData = await response.json();
-                forecastData.push(dayData); // Push the forecast data for the day into the array
-            }
-            return forecastData; // Return the array of forecast data
-        } 
-        catch (error) {
-            console.error('There was a problem fetching the forecast data:', error);
-            return null;
-        }
-    }
-    
-   
+
+
+
 async function fetchForecastData() {
-    const url = 'https://weatherapi-com.p.rapidapi.com/forecast.json?q=phnom%20penh&days=3'; // Change the days parameter to 3
+    const url = 'https://weatherapi-com.p.rapidapi.com/forecast.json?q=phnom%20penh&days=3';
     const options = {
         method: 'GET',
         headers: {
@@ -115,115 +86,74 @@ async function fetchForecastData() {
 
     try {
         const response = await fetch(url, options);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
         const data = await response.json();
         return data;
     } catch (error) {
-        throw error;
+        console.error('Error fetching forecast data:', error);
+        return null;
     }
 }
 
+function updateForecastDisplay(data) {
+    const forecastContainer = document.getElementById('forecast-container');
+    forecastContainer.innerHTML = ''; // Clear previous forecasts
 
-// Call the function to fetch forecast data
-
-fetchForecastData()
-    .then(data => {
-        if (data && data.forecast && data.forecast.forecastday) {
-            // Update HTML elements with forecast data
-            const forecastContainer = document.getElementById('forecast');
-            data.forecast.forecastday.forEach(day => {
-                const dayElement = document.createElement('div');
-                dayElement.classList.add('card-all');
-
-                // Weather section
-                const weatherSection = document.createElement('div');
-                weatherSection.classList.add('weather');
-
-                const weatherName = document.createElement('div');
-                weatherName.classList.add('name');
-                weatherName.textContent = 'Weather';
-                weatherSection.appendChild(weatherName);
-
-                const weatherDate = document.createElement('div');
-                weatherDate.classList.add('date');
-                weatherDate.textContent = day.date;
-                weatherSection.appendChild(weatherDate);
-
-                const weatherTemperature = document.createElement('div');
-                weatherTemperature.classList.add('temperature');
-                weatherTemperature.textContent = ` ${day.day.avgtemp_c}°C`;
-                weatherSection.appendChild(weatherTemperature);
-
-                const weatherCondition = document.createElement('div');
-                weatherCondition.classList.add('know');
-                weatherCondition.textContent = ` ${day.day.condition.text}`;
-                weatherSection.appendChild(weatherCondition);
-
-                dayElement.appendChild(weatherSection);
-
-                // Condition section
-                const conditionSection = document.createElement('div');
-                conditionSection.classList.add('condition');
-
-                const conditionName = document.createElement('div');
-                conditionName.classList.add('name');
-                conditionName.textContent = 'Condition';
-                conditionSection.appendChild(conditionName);
-
-                const conditionCard = document.createElement('div');
-                conditionCard.classList.add('card-condition');
-
-                const conditionText = document.createElement('div');
-                conditionText.classList.add('text-name');
-                conditionText.innerHTML = `
-                    <p>Feels Like</p>
-                    <p>Humidity</p>
-                    <p>Wind</p>
-                    <p>UV</p>
-                `;
-                conditionCard.appendChild(conditionText);
-
-                const conditionValues = document.createElement('div');
-                conditionValues.classList.add('value');
-                conditionValues.innerHTML = `
-                    <p>${day.day.avgtemp_c}°C</p>
-                    <p>${day.day.avghumidity}%</p>
-                    <p>${day.day.maxwind_kph} kph</p>
-                    <p>${day.day.uv}</p>
-                `;
-                conditionCard.appendChild(conditionValues);
-
-                conditionSection.appendChild(conditionCard);
-                dayElement.appendChild(conditionSection);
-
-                // Location section
-                const locationSection = document.createElement('div');
-                locationSection.classList.add('location');
-                
-
-                // const locationName = document.createElement('div');
-                // locationName.classList.add('location-name');
-                // locationName.innerHTML = `
-                //     <p>Country</p>
-                //     <p>Zone</p>
-                // `;
-                // locationSection.appendChild(locationName);
-
-                // const locationValues = document.createElement('div');
-                // locationValues.classList.add('location-value');
-                // locationValues.innerHTML = `
-                //     <p>${data.location.country}</p>
-                //     <p>${data.location.tz_id}</p>
-                // `;
-                // locationSection.appendChild(locationValues);
-
-                dayElement.appendChild(locationSection);
-
-                forecastContainer.appendChild(dayElement);
-            });
-        } else {
-            console.log('Failed to fetch forecast data');
+    data.forecast.forecastday.forEach((day, index) => {
+        if (index > 0) { // Skipping the first day as it is the current day already displayed elsewhere
+            const card = document.createElement('div');
+            card.className = 'card-weather';
+            card.innerHTML = `
+                <div class="card-all">
+                    <div class="weather">
+                        <div class="name">Weather</div>
+                        <div class="date">${day.date}</div>
+                        <div class="temperature">${day.day.avgtemp_c}°C</div>
+                        <div class="know">${day.day.condition.text}</div>
+                    </div>
+                    <div class="condition">
+                        <div class="name">Condition</div>
+                        <div class="card-condition">
+                            <div class="text-name">
+                                <p>Feels Like</p>
+                                <p>Humidity</p>
+                                <p>Wind</p>
+                                <p>UV</p>
+                            </div>
+                            <div class="value">
+                                <p>${day.day.feelslike_c}°C</p>
+                                <p>${day.day.avghumidity}%</p>
+                                <p>${day.day.maxwind_kph} kph</p>
+                                <p>${day.day.uv}</p>
+                            </div>
+                        </div>
+                        <div class="location">
+                        <div class="location-name">
+                            <p>Country</p>
+                            <p>Zone</p>
+                        </div>
+                        <div class="location-value">
+                            <p>${data.location.country}</p>
+                            <p>${data.location.tz_id}</p>
+                        </div>
+                    </div>
+                    </div>
+                    
+                </div>
+            `;
+            forecastContainer.appendChild(card);
         }
-    })
-    .catch(error => {
-        console.error('There was a problem fetching the forecast data:', error);
     });
+}
+
+fetchForecastData().then(data => {
+    if (data) {
+        updateForecastDisplay(data);
+    } else {
+        console.log('Failed to fetch forecast data');
+    }
+}).catch(error => {
+    console.error('There was a problem fetching the forecast data:', error);
+});
